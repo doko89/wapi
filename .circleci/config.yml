@@ -11,7 +11,7 @@ jobs:
           command: echo $DOCKER_PASS| docker login -u $DOCKER_USER --password-stdin
       - run: |
           docker buildx build --push \
-            --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
+            --platform linux/arm/v7,linux/arm64,linux/amd64 \
             --tag $DOCKER_IMAGE:latest .
     filtered:
       branches:
