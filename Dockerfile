@@ -1,16 +1,13 @@
-FROM --platform=$BUILDPLATFORM node:alpine as builder
+FROM --platform=$BUILDPLATFORM node:alpine
 
 WORKDIR /usr/src/app
+
+RUN apk update && apk add chromium
 
 COPY package*.json ./
 
 RUN npm install
 
-FROM --platform=$BUILDPLATFORM node:alpine
-
-RUN apk update && apk add chromium
-
-COPY --from=build /usr/src/app/node_modules /usr/src/app/node_modules
 
 # Bundle app source
 COPY . .
