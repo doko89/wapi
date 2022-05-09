@@ -9,11 +9,10 @@ jobs:
       - run:
           name: login docker
           command: echo $DOCKER_PASS| docker login -u $DOCKER_USER --password-stdin
-      - run:
-          name: Build multi arch docker
-          command: | 
-            DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --platform
-            linux/arm64,linux/amd64,linux/386,linux/riscv64 --push -t $DOCKER_IMAGE:latest .
+      - run: |
+          docker buildx build \
+            --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
+            --tag $DOCKER_IMAGE:latest .
     filtered:
       branches:
         only: 
