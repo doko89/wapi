@@ -1,4 +1,4 @@
-FROM node:17 as build
+FROM node:18 as build
 WORKDIR /usr/src/app
 COPY package*.json ./
 
@@ -6,7 +6,7 @@ RUN npm install
 
 
 
-FROM node:17
+FROM node:18
 
 RUN apt update && apt install -y chromium && ln -s /usr/bin/chromium /usr/bin/chromium-browser
 # Create app directory
