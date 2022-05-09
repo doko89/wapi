@@ -1,16 +1,14 @@
-FROM node:18 as build
+FROM --platform=$BUILDPLATFORM node:alpine as builder
+
 WORKDIR /usr/src/app
+
 COPY package*.json ./
 
 RUN npm install
 
+FROM --platform=$BUILDPLATFORM node:alpine
 
-
-FROM node:18
-
-RUN apt update && apt install -y chromium && ln -s /usr/bin/chromium /usr/bin/chromium-browser
-# Create app directory
-WORKDIR /usr/src/app
+RUN apk update && apk add chromium
 
 COPY --from=build /usr/src/app/node_modules /usr/src/app/node_modules
 
@@ -18,4 +16,5 @@ COPY --from=build /usr/src/app/node_modules /usr/src/app/node_modules
 COPY . .
 
 EXPOSE 8000
+
 CMD [ "node", "app.js" ]
