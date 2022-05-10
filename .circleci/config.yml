@@ -9,6 +9,9 @@ jobs:
       - run:
           name: login docker
           command: echo $DOCKER_PASS| docker login -u $DOCKER_USER --password-stdin
+      - run:
+          name: check version
+          command: docker buildx ls
       - run: |
           docker buildx build --push \
             --platform linux/arm/v7,linux/arm64,linux/amd64 \
